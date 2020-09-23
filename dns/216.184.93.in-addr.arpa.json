@@ -1,0 +1,23 @@
+{
+  "serial": 3,
+  "ttl": 600,
+  "max_hosts": 2,
+  "origin": "216.184.93.IN-ADDR.ARPA.",
+  "data": {
+    "": {
+      "ns": {
+        "ns1.example.net.": null,
+        "ns2.example.net.": null
+      }   
+    },
+    "5":{
+      "cname": "dash.example.com.",
+      "ttl": 86400,
+      "ptr": [
+        [
+          "dash.example.com."
+        ]
+      ]
+    }   
+  }
+}

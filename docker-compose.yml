@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  web-challenge:
+    build: .
+    restart: always
+    ports:
+      - "3001:80"
+    networks:
+        default:  
+
+networks:
+    default:
