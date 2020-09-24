@@ -18,17 +18,23 @@ RUN apt-get install nginx curl python3-pip -y && \
 
 COPY ./conf.d/default.conf /etc/nginx/nginx.conf
 
-RUN unlink /etc/nginx/sites-enabled/default
-
 RUN mkdir /app && mkdir -p /var/www/static/
 
 COPY ./dash /app
 
-RUN mv ./app/css /var/www/static/ && chmod +x /app/run.sh
+RUN mv ./app/css /var/www/static/ && chmod +x /app/run.sh && mkdir /dns
+
+COPY ./.flag.txt /var/www/
+
+COPY ./bin/geodns geodns
 
 RUN pip3 install -r /app/requirements.txt
 
 EXPOSE 80
+
+EXPOSE 53
+
+EXPOSE 53/udp
 
 WORKDIR /app/
 

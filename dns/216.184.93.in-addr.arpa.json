@@ -10,7 +10,7 @@
         "ns2.example.net.": null
       }   
     },
-    "5":{
+    "6":{
       "cname": "dash.example.com.",
       "ttl": 86400,
       "ptr": [
