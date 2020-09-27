@@ -22,8 +22,7 @@ RUN mkdir /app && mkdir -p /var/www/static/
 
 COPY ./dash /app
 
-RUN mv ./app/css /var/www/static/ && chmod +x /app/run.sh && mkdir /dns
-
+RUN mv ./app/css /var/www/static/ && chmod +x /app/run.sh && mkdir /dns && mv ./app/img /var/www/static
 COPY ./.flag.txt /var/www/
 
 COPY ./bin/geodns geodns
