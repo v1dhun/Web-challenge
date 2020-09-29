@@ -7,9 +7,9 @@ services:
     volumes:
       - ./dns:/dns
     ports:
-      - "3001:80"
-      - "8081:53"
-      - "8081:53/udp"
+      - "80:80"
+      - "53:53"
+      - "53:53/udp"
     networks:
         default:  
 
