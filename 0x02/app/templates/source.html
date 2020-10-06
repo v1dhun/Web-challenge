@@ -1,0 +1,80 @@
+<div></div><table><tr><td><pre style="margin: 0; line-height: 125%">
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+   10
+   11
+   12
+   13
+   14
+   15
+   16
+   17
+   18
+   19
+   20
+   21
+   22
+   23
+   24
+   25
+   26
+   27
+   28
+   29
+   30
+   31
+   32
+   33
+   34
+   35
+   36
+   37
+   38
+   39</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #0000aa">from</span> <span style="color: #00aaaa; text-decoration: underline">flask.json</span> <span style="color: #0000aa">import</span> jsonify
+   <span style="color: #0000aa">import</span> <span style="color: #00aaaa; text-decoration: underline">requests</span>, <span style="color: #00aaaa; text-decoration: underline">re</span>
+   <span style="color: #0000aa">from</span> <span style="color: #00aaaa; text-decoration: underline">flask</span> <span style="color: #0000aa">import</span> Flask, request, make_response,  render_template
+   app = Flask(__name__)
+   
+   regex = re.compile(<span style="color: #aa5500">r&#39;^((?:http(?:s)?:\/\/)?)((?:www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b)((?:\:\d+)?)((?:[-\w@:%\+.~#&amp;/=]*)?)((?:\?[-\w%\+.~#&amp;=]*)?)$&#39;</span>, re.IGNORECASE)
+   
+   
+   <span style="color: #888888">@app.route</span>(<span style="color: #aa5500">&#39;/&#39;</span>, methods=[<span style="color: #aa5500">&#39;GET&#39;</span>])
+   <span style="color: #0000aa">def</span> <span style="color: #00aa00">index</span>():
+       <span style="color: #0000aa">return</span> jsonify({<span style="color: #aa5500">&quot;Endpoints&quot;</span>:[[<span style="color: #aa5500">&quot;/source&quot;</span>,{<span style="color: #aa5500">&quot;Method&quot;</span>:<span style="color: #aa5500">&quot;GET&quot;</span>,<span style="color: #aa5500">&quot;Param&quot;</span>:{<span style="color: #aa5500">&quot;value&quot;</span>:<span style="color: #aa5500">&quot;view&quot;</span>,<span style="color: #aa5500">&quot;type&quot;</span>:<span style="color: #aa5500">&quot;bool&quot;</span>}}],[<span style="color: #aa5500">&quot;/getHeader&quot;</span>,{<span style="color: #aa5500">&quot;Method&quot;</span>:<span style="color: #aa5500">&quot;POST&quot;</span>,<span style="color: #aa5500">&quot;Param&quot;</span>:{<span style="color: #aa5500">&quot;value&quot;</span>:<span style="color: #aa5500">&quot;url&quot;</span>,<span style="color: #aa5500">&quot;type&quot;</span>:<span style="color: #aa5500">&quot;string&quot;</span>},<span style="color: #aa5500">&quot;Example&quot;</span>:{<span style="color: #aa5500">&quot;Request&quot;</span>:<span style="color: #aa5500">&quot;url=http://example.com&quot;</span>,<span style="color: #aa5500">&quot;Response&quot;</span>:{<span style="color: #aa5500">&quot;Content-Encoding&quot;</span>:<span style="color: #aa5500">&quot;gzip&quot;</span>,<span style="color: #aa5500">&quot;Accept-Ranges&quot;</span>:<span style="color: #aa5500">&quot;bytes&quot;</span>,<span style="color: #aa5500">&quot;Age&quot;</span>:<span style="color: #aa5500">&quot;349563&quot;</span>,<span style="color: #aa5500">&quot;Cache-Control&quot;</span>:<span style="color: #aa5500">&quot;max-age=604800&quot;</span>,<span style="color: #aa5500">&quot;Content-Type&quot;</span>:<span style="color: #aa5500">&quot;text/html; charset=UTF-8&quot;</span>,<span style="color: #aa5500">&quot;Date&quot;</span>:<span style="color: #aa5500">&quot;Tue, 06 Oct 2020 09:37:06 GMT&quot;</span>,<span style="color: #aa5500">&quot;Etag&quot;</span>:<span style="color: #aa5500">&quot;3147526947&quot;</span>,<span style="color: #aa5500">&quot;Expires&quot;</span>:<span style="color: #aa5500">&quot;Tue, 13 Oct 2020 09:37:06 GMT&quot;</span>,<span style="color: #aa5500">&quot;Last-Modified&quot;</span>:<span style="color: #aa5500">&quot;Thu, 17 Oct 2019 07:18:26 GMT&quot;</span>,<span style="color: #aa5500">&quot;Server&quot;</span>:<span style="color: #aa5500">&quot;ECS (oxr/832D)&quot;</span>,<span style="color: #aa5500">&quot;Vary&quot;</span>:<span style="color: #aa5500">&quot;Accept-Encoding&quot;</span>,<span style="color: #aa5500">&quot;X-Cache&quot;</span>:<span style="color: #aa5500">&quot;HIT&quot;</span>,<span style="color: #aa5500">&quot;Content-Length&quot;</span>:<span style="color: #aa5500">&quot;648&quot;</span>}}}]]}),<span style="color: #009999">200</span>   
+    
+   
+   <span style="color: #888888">@app.route</span>(<span style="color: #aa5500">&#39;/getHeader&#39;</span>, methods=[<span style="color: #aa5500">&#39;POST&#39;</span>])
+   <span style="color: #0000aa">def</span> <span style="color: #00aa00">header</span>():
+       <span style="color: #0000aa">if</span> request.form.get(<span style="color: #aa5500">&#39;url&#39;</span>):
+           url = request.form.get(<span style="color: #aa5500">&#39;url&#39;</span>)
+           <span style="color: #0000aa">if</span> re.match(regex, url):
+               res = requests.get(url,allow_redirects=<span style="color: #00aaaa">True</span>)
+               <span style="color: #0000aa">return</span> jsonify(<span style="color: #00aaaa">dict</span>(res.headers)),<span style="color: #009999">200</span>
+           <span style="color: #0000aa">else</span>:
+               <span style="color: #0000aa">return</span> jsonify({<span style="color: #aa5500">&quot;error&quot;</span>:<span style="color: #aa5500">&quot;Given input is not url&quot;</span>}),<span style="color: #009999">200</span>
+       <span style="color: #0000aa">else</span>:
+           <span style="color: #0000aa">return</span> jsonify({<span style="color: #aa5500">&quot;error&quot;</span>:<span style="color: #aa5500">&quot;Something Went Wrong!&quot;</span>}),<span style="color: #009999">200</span>
+   
+   <span style="color: #888888">@app.route</span>(<span style="color: #aa5500">&#39;/source&#39;</span>, methods=[<span style="color: #aa5500">&#39;GET&#39;</span>])
+   <span style="color: #0000aa">def</span> <span style="color: #00aa00">source</span>():
+       <span style="color: #0000aa">if</span> request.args.get(<span style="color: #aa5500">&#39;view&#39;</span>):
+           value = request.args.get(<span style="color: #aa5500">&#39;view&#39;</span>) 
+           <span style="color: #0000aa">if</span>(value==<span style="color: #aa5500">&quot;true&quot;</span>):
+               <span style="color: #0000aa">return</span> render_template(<span style="color: #aa5500">&#39;source.html&#39;</span>)
+           <span style="color: #0000aa">else</span>:
+               <span style="color: #0000aa">return</span> <span style="color: #aa5500">&#39;&#39;</span>,<span style="color: #009999">201</span> 
+       <span style="color: #0000aa">else</span>:
+           <span style="color: #0000aa">return</span> <span style="color: #aa5500">&#39;&#39;</span>,<span style="color: #009999">201</span>
+   
+   
+   <span style="color: #0000aa">if</span> __name__ == <span style="color: #aa5500">&#39;__main__&#39;</span>:
+       app.run(host=<span style="color: #aa5500">&#39;127.0.0.1&#39;</span>, port=<span style="color: #009999">80</span>)
+   </pre></td></tr></table></div>
+   <!--Grab the flag from :8080-->

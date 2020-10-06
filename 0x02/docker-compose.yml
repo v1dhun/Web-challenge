@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  ssrf-challenge:
+    build: .
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+        default:  
+
+networks:
+    default:
