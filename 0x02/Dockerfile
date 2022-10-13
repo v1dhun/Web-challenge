@@ -1,5 +1,5 @@
 
-FROM ubuntu
+FROM ubuntu:bionic
 
 RUN DEBIAN_FRONTEND=noninteractive && ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime  
 RUN apt update && apt-get install -y tzdata && dpkg-reconfigure --frontend noninteractive tzdata
